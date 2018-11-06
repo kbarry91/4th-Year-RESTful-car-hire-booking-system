@@ -17,11 +17,13 @@ public class BookingServiceSetup {
 		//Bind our remote object to the registry with the human-readable name "bookingService"
 		// access using "rmi://127.0.0.1:1099/bookingService"
 		try {
-			Naming.rebind("bookingSevice", bookingService);
+			Naming.rebind("bookingService", bookingService);
 			//Print a message to standard output
 			System.out.println("Booking Server ready.");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			System.out.println("Server malfunction///////////////////////////////");
+
 			e.printStackTrace();
 			System.out.println("Server malfunction");
 		}

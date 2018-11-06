@@ -40,18 +40,19 @@ public class BookingController {
 		String resultObject = null;
 
 		try {
+			System.out.println("Booking controller//////////////////////////////////////////////listAllBookings");
+
 			bookings = bookingServiceInterface.listAllBookings();
-			System.out.println("Booking controller//listAllBookings");
 		} catch (RemoteException e) {
 
-			System.out.println("error accessing data from remote object");
+			System.out.println("error accessing data from remote object//////////////////////////////////////////////");
 			e.printStackTrace();
 		}
 
-		//System.out.println(bookings.size());
-		//resultBooking = bookings.get(0);
+		System.out.println(bookings.size());
+		resultBooking = bookings.get(0);
 
-		//System.out.println(resultBooking.getBookingId()); // for
+	System.out.println(resultBooking.getBookingId()); // for
 		return bookings;
 	}
 

@@ -1,9 +1,6 @@
 package ie.gmit.sw.RMI;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
+
 import java.rmi.*;
 import java.rmi.server.*;
 import java.sql.Connection;
@@ -25,10 +22,20 @@ public class BookingServiceImplements extends UnicastRemoteObject implements IBo
 		super();
 		String url = "jdbc:mysql://localhost:3306/carbookingdb?useSSL=false";
 		// Get connection to db
-		Connection conn = DriverManager.getConnection(url, "root", "");
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection(url, "root", "");
 
-		// Create statement object
-		stmt = conn.createStatement();
+			// Create statement object
+			stmt = conn.createStatement();
+			System.out.println("DEBUG DB Connected//////////////////////////////////////////////////////");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("DEBUG DB Connect Failed//////////////////////////////////////////////////////");
+
+		}
+
 	}
 
 	@Override
@@ -64,7 +71,7 @@ public class BookingServiceImplements extends UnicastRemoteObject implements IBo
 
 	@Override
 	public List<BookingModelReturned> listAllBookings() throws RemoteException {
-		// System.out.println("inside readBookings");
+		 System.out.println("Listing all bookings////////////////////////////////////////////////////");
 		String query = "select * from bookings";
 		ResultSet result = null;
 
