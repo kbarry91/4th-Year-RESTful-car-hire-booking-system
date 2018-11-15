@@ -13,6 +13,7 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Booking")
+@XmlRootElement
 public class Booking implements Serializable{
 
     /**
@@ -52,7 +54,7 @@ public class Booking implements Serializable{
     protected int vehicleId;
     @XmlAttribute(name = "cust_id", required = true)
     protected int custId;
-    @XmlAttribute(name = "bookingNumber", required = true)
+    @XmlAttribute(name = "bookingNumber")
     protected String bookingNumber;
     @XmlAttribute(name = "startDate", required = true)
     protected String startDate;
@@ -155,7 +157,13 @@ public class Booking implements Serializable{
         this.startDate = value;
     }
 
-    /**
+    @Override
+	public String toString() {
+		return "Booking [bookingId=" + bookingId + ", vehicleId=" + vehicleId + ", custId=" + custId
+				+ ", bookingNumber=" + bookingNumber + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+	}
+
+	/**
      * Gets the value of the endDate property.
      * 
      * @return

@@ -78,13 +78,11 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 
 	@Override
 	public List<Booking> listAllBookings() throws RemoteException {
-		System.out.println("Listing all bookings////////////////////////////////////////////////////");
+		System.out.println("Listing all bookings RMISERVER start");
 		String query = "select * from bookings";
 		ResultSet result = null;
 
-		ArrayList<ResultSet> resultSetSerialized = new ArrayList<ResultSet>();
 
-		Booking booking = new Booking();
 		List<Booking> bookings = new ArrayList<Booking>();
 
 		try {
@@ -95,6 +93,8 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 
 		try {
 			while (result.next()) {
+				Booking booking = new Booking();
+
 				booking.setBookingId(result.getInt("booking_id"));
 				booking.setVehicleId(result.getInt("vehicle_id"));
 				booking.setCustId(result.getInt("customer_id"));
@@ -107,7 +107,12 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 
 			e.printStackTrace();
 		}
-
+		System.out.println("Listing all bookings RMISERVER end");
+		int counter = 0;
+		for (Booking bk : bookings) {
+			counter ++;
+			System.out.println("DEBUG RMI SERVER /DatabaseServiceImpl "+counter+": "+bk.toString());
+		}
 		return bookings;
 	}
 

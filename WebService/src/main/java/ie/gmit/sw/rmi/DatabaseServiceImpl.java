@@ -1,6 +1,5 @@
 package ie.gmit.sw.rmi;
 
-
 import java.rmi.*;
 import java.rmi.server.*;
 import java.sql.Connection;
@@ -74,7 +73,7 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 
 	@Override
 	public List<Booking> listAllBookings() throws RemoteException {
-		 System.out.println("Listing all bookings////////////////////////////////////////////////////");
+		System.out.println("Listing all bookings////////////////////////////////////////////////////");
 		String query = "select * from bookings";
 		ResultSet result = null;
 
@@ -103,7 +102,7 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 
 			e.printStackTrace();
 		}
-
+		System.out.println("=========================inside  jersey dbserviceimplemtes!");
 		return bookings;
 	}
 

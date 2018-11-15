@@ -1,6 +1,5 @@
 package ie.gmit.sw.WebService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -34,9 +33,39 @@ public class MyResource {
 	 *
 	 * @return String that will be returned as a text/plain response.
 	 */
+	
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	public List<Booking> getIt() {
+		/*
+		List<Booking> bookings = new ArrayList<Booking>();
+		Booking booking = new Booking();
+		List<Booking> bookingModelsReturned = bc.getAllBookings();
+
+		for (Booking bmr : bookingModelsReturned) {
+			booking.setBookingId(bmr.getBookingId());
+			booking.setVehicleId(bmr.getVehicleId());
+			booking.setCustId(bmr.getCustId());
+			booking.setStartDate(bmr.getStartDate());
+			booking.setEndDate(bmr.getEndDate());
+			
+
+			bookings.add(booking);
+			System.out.println("In my resource:"+booking.toString());
+
+		}
+	
+		//List<Booking> allBookings = bc.getAllBookings();
+		
+		*/
+		return bc.getAllBookings();
+		//return bookings;
+	}
+	
+/*
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getIt() {
 		/*List<Booking> bookings = new ArrayList<Booking>();
 		Booking booking = new Booking();
 		List<Booking> bookingModelsReturned = bc.getAllBookings();
@@ -53,11 +82,15 @@ public class MyResource {
 			System.out.println("In my resource:"+booking.toString());
 
 		}
-		*/
-		for (Booking booking : bc.getAllBookings()) {
-			System.out.println("DEBUG My Resource: "+booking.toString());
+		
+		List<Booking> allBookings = bc.getAllBookings();
+		int counter = 0;
+		for (Booking booking : allBookings) {
+			counter ++;
+			System.out.println("DEBUG My Resource "+counter+": "+booking.toString());
 		}
-		return bc.getAllBookings();
+		return allBookings.get(1).toString();
 		//return bookings;
 	}
+	*/
 }

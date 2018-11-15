@@ -39,7 +39,7 @@ public class RMIClient {
 	 */
 	public List<Booking> getAllBookings() {
 		ResultSet resultSet = null;
-		List<Booking> bookings = new ArrayList<Booking>();
+		List<Booking> bookings = null ;
 		Booking resultBooking;
 		String startDate = null;
 		String resultObject = null;
