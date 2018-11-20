@@ -39,11 +39,11 @@ public class RMIClient {
 	 */
 	public List<Booking> getAllBookings() {
 		ResultSet resultSet = null;
-		List<Booking> bookings = null ;
-	
+		List<Booking> bookings = null;
 
 		try {
-			System.out.println("Booking Jersey controller//////////////////////////////////////////////listAllBookings");
+			System.out
+					.println("Booking Jersey controller//////////////////////////////////////////////listAllBookings");
 
 			bookings = bookingServiceInterface.listAllBookings();
 		} catch (RemoteException e) {
@@ -53,8 +53,8 @@ public class RMIClient {
 		}
 
 		System.out.println(bookings.size());
-		System.err.println("Bookings-->"+bookings.get(0).toString());
-	//	resultBooking = bookings.get(0);
+		System.err.println("Bookings-->" + bookings.get(0).toString());
+		// resultBooking = bookings.get(0);
 
 //	System.out.println(resultBooking.getBookingId()); // for
 		return bookings;
@@ -69,7 +69,7 @@ public class RMIClient {
 		Booking resultBooking = null;
 
 		try {
-		bookings = bookingServiceInterface.listAllBookings();
+			bookings = bookingServiceInterface.listAllBookings();
 		} catch (RemoteException e) {
 			System.out.println("error accessing data from remote object");
 			e.printStackTrace();
@@ -92,11 +92,14 @@ public class RMIClient {
 
 	/* Create a booking */
 	public void create(Booking booking) {
-		//String query = "Insert INTO bookings VALUES(" + booking.getBookingId() + "," + booking.getVehicleId() + ","
-		//		+ booking.getCustId() + ",\"" + booking.getStartDate() + "\",\"" + booking.getEndDate() + "\");";
-
-		String query =" INSERT INTO bookings (vehicle_id,customer_id,start_date,end_date)VALUES("+
-				booking.getVehicleId()+","+booking.getCustId()+","+booking.getStartDate()+","+booking.getEndDate()+")";
+		// String query = "Insert INTO bookings VALUES(" + booking.getBookingId() + ","
+		// + booking.getVehicleId() + ","
+		// + booking.getCustId() + ",\"" + booking.getStartDate() + "\",\"" +
+		// booking.getEndDate() + "\");";
+		System.out.println("DEBUG/RMI CLIENT? Attempting to send to db:" + booking.toString());
+		String query = " INSERT INTO bookings (vehicle_id,customer_id,start_date,end_date)VALUES("
+				+ booking.getVehicleId() + "," + booking.getCustId() + ",'" + booking.getStartDate() + "','"
+				+ booking.getEndDate() + "')";
 		try {
 			bookingServiceInterface.create(query);
 		} catch (RemoteException e) {

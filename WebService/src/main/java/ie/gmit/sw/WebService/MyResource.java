@@ -15,12 +15,13 @@ import javax.ws.rs.core.Response;
 
 import ie.gmit.sw.models.Booking;
 import ie.gmit.sw.rmi.RMIClient;
+import ie.gmit.sw.utils.*;
 
 /**
  * Root resource (exposed at "myresource" path)
  */
 @Path("bookingresource")
-public class MyResource {
+public class MyResource extends BookingMarshal {
 	RMIClient bc = new RMIClient();
 	List<Booking> bookings = new ArrayList<Booking>();
 
@@ -57,15 +58,20 @@ public class MyResource {
 	 * response format which is sent will depend on the Accept: header field in the
 	 * HTTP request from the client
 	 */
-	public Booking getBooking(@PathParam("value") String value) {
+	public Response getBooking(@PathParam("value") String value) {
 		Booking requested = null;
 		for (Booking b : bookings) {
 			if (b.getBookingId() == Integer.parseInt(value)) {
 				requested = b;
 			}
 		}
+		if (requested != null) {
+			String msg = getBookingAsXML(requested);
 
-		return requested;
+			return Response.status(200).entity(msg).build();
+		} else {
+			return Response.status(404).entity("Resource doesn't exist").build();
+		}
 	}
 
 	@GET
@@ -95,37 +101,39 @@ public class MyResource {
 	}
 
 	@POST
-	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_XML)
-	@Path("/{value}")
-	public Response createBooking(@PathParam("value") int value, Booking toCreate) {
+	public Response createBooking(String toCreate) {
+
+		Booking newBooking = getBookingFromXML(toCreate);
 		Booking requested = null;
+		System.out.println("DEBUG/POST: Atempting to add booking wioth date "+newBooking.getStartDate());
 		for (Booking b : bookings) {
-			if (b.getBookingId() == value) {
+			System.out.println("DEBUG/POST:" + newBooking.getBookingId());
+			if (b.getBookingId() == newBooking.getBookingId()) {
 				requested = b;
 			}
 		}
 
 		if (requested != null) {
-			String msg = "The booking number " + value + " already exists";
+			String msg = "The booking number " + newBooking.getBookingId() + " already exists";
 			return Response.status(409).entity(msg).build();
 		} else {
-			bookings.add(toCreate);
-			bc.create(toCreate);
+			bookings.add(newBooking);
+			bc.create(newBooking);
 			String msg = "Resource created!";
 			return Response.status(201).entity(msg).build(); // return 201 for resource created
 		}
 	}
 
 	@DELETE
-	//@Produces({MediaType.TEXT_PLAIN ,MediaType.APPLICATION_XML})
-	@Consumes(MediaType.APPLICATION_XML)
+	// @Produces({MediaType.TEXT_PLAIN ,MediaType.APPLICATION_XML})
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN })
 	@Path("/{value}")
 	public Response deleteBooking(@PathParam("value") String value) {
 		System.out.println("DEBUG/BookingResource: Attempting delete");
 		Booking requested = null;
 		for (Booking b : bookings) {
-			if (b.getBookingId() ==Integer.parseInt(value)) {
+			if (b.getBookingId() == Integer.parseInt(value)) {
 				requested = b;
 			}
 		}

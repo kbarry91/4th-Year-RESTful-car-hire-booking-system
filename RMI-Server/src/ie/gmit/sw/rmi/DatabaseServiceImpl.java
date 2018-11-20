@@ -48,6 +48,8 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 	@Override
 	public boolean create(String q) throws RemoteException {
 		try {
+			System.out.println("DEBUG/RMI/CREATE: Atempting to add booking using query :"+q);
+
 			stmt.executeUpdate(q);
 		} catch (SQLException e) {
 			System.out.println("SQL Error creating bookingS");
