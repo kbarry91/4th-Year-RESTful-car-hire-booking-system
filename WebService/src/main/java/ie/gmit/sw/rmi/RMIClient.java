@@ -20,7 +20,7 @@ public class RMIClient {
 		try {
 			System.out.println("DEBUG- booking controller constuctor about to naming lookup");
 
-			this.bookingServiceInterface = (DatabaseService) Naming.lookup("rmi://127.0.0.1:1099/bookingService");
+			this.bookingServiceInterface = (DatabaseService) Naming.lookup("rmi://127.0.0.1:1099/databaseservice");
 			System.out.println("DEBUG- booking controller constuctor after naming lookup");
 
 		} catch (MalformedURLException e) {
@@ -40,9 +40,7 @@ public class RMIClient {
 	public List<Booking> getAllBookings() {
 		ResultSet resultSet = null;
 		List<Booking> bookings = null ;
-		Booking resultBooking;
-		String startDate = null;
-		String resultObject = null;
+	
 
 		try {
 			System.out.println("Booking Jersey controller//////////////////////////////////////////////listAllBookings");
@@ -93,12 +91,14 @@ public class RMIClient {
 	}
 
 	/* Create a booking */
-	public void createBooking(Booking booking) {
-		String query = "Insert INTO bookings VALUES(" + booking.getBookingId() + "," + booking.getVehicleId() + ","
-				+ booking.getCustId() + ",\"" + booking.getStartDate() + "\",\"" + booking.getEndDate() + "\");";
+	public void create(Booking booking) {
+		//String query = "Insert INTO bookings VALUES(" + booking.getBookingId() + "," + booking.getVehicleId() + ","
+		//		+ booking.getCustId() + ",\"" + booking.getStartDate() + "\",\"" + booking.getEndDate() + "\");";
 
+		String query =" INSERT INTO bookings (vehicle_id,customer_id,start_date,end_date)VALUES("+
+				booking.getVehicleId()+","+booking.getCustId()+","+booking.getStartDate()+","+booking.getEndDate()+")";
 		try {
-			bookingServiceInterface.addBooking(query);
+			bookingServiceInterface.create(query);
 		} catch (RemoteException e) {
 			System.out.println("error on sql query in booking controller");
 			e.printStackTrace();
@@ -122,11 +122,12 @@ public class RMIClient {
 	}
 
 	/** Delete a booking */
-	public void deleteBooking(int id) {
+	public void delete(int id) {
 		String query = "DELETE FROM bookings WHERE booking_id =" + id + ";";
 
 		try {
-			bookingServiceInterface.deleteBooking(query);
+			System.out.println("Debug/RMIClient : Attempting to delete");
+			bookingServiceInterface.delete(query);
 		} catch (RemoteException e) {
 			System.out.println("error deleting booking in Booking controller");
 			e.printStackTrace();

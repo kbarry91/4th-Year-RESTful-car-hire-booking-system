@@ -46,13 +46,14 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 	}
 
 	@Override
-	public void addBooking(String q) throws RemoteException {
+	public boolean create(String q) throws RemoteException {
 		try {
 			stmt.executeUpdate(q);
 		} catch (SQLException e) {
 			System.out.println("SQL Error creating bookingS");
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
@@ -66,12 +67,12 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 	}
 
 	@Override
-	public void deleteBooking(String q) throws RemoteException {
+	public void delete(String q) throws RemoteException {
 		// TODO Auto-generated method stub
 		try {
 			stmt.executeUpdate(q);
 		} catch (SQLException e) {
-			System.out.println("SQL Error creating bookingS");
+			System.out.println("SQL Error deleting booking");
 			e.printStackTrace();
 		}
 	}

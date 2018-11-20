@@ -9,7 +9,7 @@ public class ServiceSetup {
 
 		//Create an instance of a BookingServiceImplements. As BookingServiceImplements implements the BookingService
 		//interface, it can be referred to as a BookinService type.
-		DatabaseService bookingService = new DatabaseServiceImpl();
+		DatabaseService databaseService = new DatabaseServiceImpl();
 
 		//Start the RMI registry on port 1099
 		LocateRegistry.createRegistry(1099);
@@ -17,7 +17,7 @@ public class ServiceSetup {
 		//Bind our remote object to the registry with the human-readable name "bookingService"
 		// access using "rmi://127.0.0.1:1099/bookingService"
 		try {
-			Naming.rebind("bookingService", bookingService);
+			Naming.rebind("databaseservice", databaseService);
 			//Print a message to standard output
 			System.out.println("Booking Server ready.");
 		} catch (Exception e) {

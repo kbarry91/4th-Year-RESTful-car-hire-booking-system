@@ -8,7 +8,7 @@ import ie.gmit.sw.models.Booking;
 
 public interface DatabaseService extends Remote {
 	// add a new booking
-	public void addBooking(String q) throws RemoteException; 
+	public boolean create(String q) throws RemoteException; 
 
 	// list booking
 	public List<Booking> listAllBookings() throws RemoteException; 
@@ -17,5 +17,7 @@ public interface DatabaseService extends Remote {
 	public void updateBooking(String q) throws RemoteException; 
 
 	// deletebooking
-	public void deleteBooking(String q) throws RemoteException; 
+	public void delete(String q) throws RemoteException; 
+	
+	
 }
