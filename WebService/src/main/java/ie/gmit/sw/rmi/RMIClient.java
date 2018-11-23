@@ -110,15 +110,16 @@ public class RMIClient {
 
 	/* Update a booking */
 	public void updateBooking(Booking booking) {
+		System.out.println("DEBUG/RMI CLIENT? Attempting to UPDATE to db:" + booking.toString());
 
 		String query = "UPDATE bookings SET vehicle_id =" + booking.getVehicleId() + ", " + "customer_id ="
-				+ booking.getCustId() + ", " + "start_date =\"" + booking.getStartDate() + "\", " + "end_date =\""
-				+ booking.getEndDate() + "\" WHERE booking_id=" + booking.getBookingId() + ";";
+				+ booking.getCustId() + ", " + "start_date ='" + booking.getStartDate() + "', " + "end_date ='"
+				+ booking.getEndDate() + "' WHERE booking_id=" + booking.getBookingId() + ";";
 
 		try {
 			bookingServiceInterface.updateBooking(query);
 		} catch (RemoteException e) {
-			System.out.println("error updating booking in Booking controller");
+			System.out.println("Error occured updated booking!");
 			e.printStackTrace();
 		}
 

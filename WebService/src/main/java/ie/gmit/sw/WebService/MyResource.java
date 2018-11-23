@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -121,6 +122,35 @@ public class MyResource extends BookingMarshal {
 			bookings.add(newBooking);
 			bc.create(newBooking);
 			String msg = "Resource created!";
+			return Response.status(201).entity(msg).build(); // return 201 for resource created
+		}
+	}
+
+	@PUT
+	@Consumes(MediaType.APPLICATION_XML)
+	@Path("{id}")
+	public Response updateBooking(@PathParam("id") String id, String toUpdate) {
+
+		Booking updateBooking = getBookingFromXML(toUpdate);
+		Booking toReplace = null;
+		System.out.println("DEBUG/POST: Atempting to update booking with id "+updateBooking.getBookingId());
+		
+		for (Booking b : bookings) {
+			System.out.println("DEBUG/UPDATE:comparing " +b.getBookingId()+" with:"+ updateBooking.getBookingId());
+
+			if (b.getBookingId() == updateBooking.getBookingId()) {
+				toReplace = b;
+			}
+		}
+
+		if (toReplace == null) {
+			String msg = "The booking number " + updateBooking.getBookingId() + " does not exist!";
+			return Response.status(409).entity(msg).build();
+		} else {
+			bookings.remove(toReplace);
+			bookings.add(updateBooking);
+			bc.updateBooking(updateBooking);
+			String msg = "Update Resource created!";
 			return Response.status(201).entity(msg).build(); // return 201 for resource created
 		}
 	}
