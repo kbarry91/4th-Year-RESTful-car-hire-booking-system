@@ -7,16 +7,16 @@ import java.util.List;
 import ie.gmit.sw.models.Booking;
 
 public interface DatabaseService extends Remote {
-	// add a new booking
+	// create booking
 	public boolean create(String q) throws RemoteException; 
 
-	// list booking
+	// read booking
 	public List<Booking> listAllBookings() throws RemoteException; 
 
 	// update booking
-	public void updateBooking(String q) throws RemoteException; 
+	public void update(String q) throws RemoteException; 
 
-	// deletebooking
+	// delete booking
 	public void delete(String q) throws RemoteException; 
 	
 	

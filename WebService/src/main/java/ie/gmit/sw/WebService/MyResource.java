@@ -78,25 +78,7 @@ public class MyResource extends BookingMarshal {
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	public List<Booking> getIt() {
-		/*
-		 * List<Booking> bookings = new ArrayList<Booking>(); Booking booking = new
-		 * Booking(); List<Booking> bookingModelsReturned = bc.getAllBookings();
-		 * 
-		 * for (Booking bmr : bookingModelsReturned) {
-		 * booking.setBookingId(bmr.getBookingId());
-		 * booking.setVehicleId(bmr.getVehicleId()); booking.setCustId(bmr.getCustId());
-		 * booking.setStartDate(bmr.getStartDate());
-		 * booking.setEndDate(bmr.getEndDate());
-		 * 
-		 * 
-		 * bookings.add(booking);
-		 * System.out.println("In my resource:"+booking.toString());
-		 * 
-		 * }
-		 * 
-		 * //List<Booking> allBookings = bc.getAllBookings();
-		 * 
-		 */
+		
 		return bc.getAllBookings();
 		// return bookings;
 	}
@@ -150,7 +132,7 @@ public class MyResource extends BookingMarshal {
 			bookings.remove(toReplace);
 			bookings.add(updateBooking);
 			bc.updateBooking(updateBooking);
-			String msg = "Update Resource created!";
+			String msg = "Update Resource crated!";
 			return Response.status(201).entity(msg).build(); // return 201 for resource created
 		}
 	}
@@ -179,28 +161,5 @@ public class MyResource extends BookingMarshal {
 			return Response.status(404).entity(msg).build(); // return 404 for resource not found
 		}
 	}
-	/*
-	 * @GET
-	 * 
-	 * @Produces(MediaType.TEXT_PLAIN) public String getIt() { /*List<Booking>
-	 * bookings = new ArrayList<Booking>(); Booking booking = new Booking();
-	 * List<Booking> bookingModelsReturned = bc.getAllBookings();
-	 * 
-	 * for (Booking bmr : bookingModelsReturned) {
-	 * booking.setBookingId(bmr.getBookingId());
-	 * booking.setVehicleId(bmr.getVehicleId()); booking.setCustId(bmr.getCustId());
-	 * booking.setStartDate(bmr.getStartDate());
-	 * booking.setEndDate(bmr.getEndDate());
-	 * 
-	 * 
-	 * bookings.add(booking);
-	 * System.out.println("In my resource:"+booking.toString());
-	 * 
-	 * }
-	 * 
-	 * List<Booking> allBookings = bc.getAllBookings(); int counter = 0; for
-	 * (Booking booking : allBookings) { counter ++;
-	 * System.out.println("DEBUG My Resource "+counter+": "+booking.toString()); }
-	 * return allBookings.get(1).toString(); //return bookings; }
-	 */
+	
 }

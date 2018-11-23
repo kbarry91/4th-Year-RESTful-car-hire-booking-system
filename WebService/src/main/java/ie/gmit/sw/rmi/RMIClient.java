@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +14,10 @@ public class RMIClient {
 	DatabaseService bookingServiceInterface;
 
 	public RMIClient() {
-		System.out.println("DEBUG- booking controller constuctor");
 		// get a handle on the remote object
 		try {
-			System.out.println("DEBUG- booking controller constuctor about to naming lookup");
-
+			// Attach the RMI stub to the Database service
 			this.bookingServiceInterface = (DatabaseService) Naming.lookup("rmi://127.0.0.1:1099/databaseservice");
-			System.out.println("DEBUG- booking controller constuctor after naming lookup");
-
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (RemoteException e) {
@@ -30,33 +25,24 @@ public class RMIClient {
 		} catch (NotBoundException e) {
 			e.printStackTrace();
 		}
-		System.out.println("DEBUG- booking controller constuctor end");
-
 	}
 
 	/*
-	 * Return all bookings
+	 * Return all bookings from RMI server database.
 	 */
 	public List<Booking> getAllBookings() {
-		ResultSet resultSet = null;
+
 		List<Booking> bookings = null;
 
 		try {
-			System.out
-					.println("Booking Jersey controller//////////////////////////////////////////////listAllBookings");
 
-			bookings = bookingServiceInterface.listAllBookings();
+			bookings = bookingServiceInterface.read();
 		} catch (RemoteException e) {
 
-			System.out.println("error accessing data from remote object//////////////////////////////////////////////");
+			System.out.println("Error occurred: Could not read from RMI server!");
 			e.printStackTrace();
 		}
-
-		System.out.println(bookings.size());
-		System.err.println("Bookings-->" + bookings.get(0).toString());
-		// resultBooking = bookings.get(0);
-
-//	System.out.println(resultBooking.getBookingId()); // for
+		// Return the list of bookings
 		return bookings;
 	}
 
@@ -69,9 +55,9 @@ public class RMIClient {
 		Booking resultBooking = null;
 
 		try {
-			bookings = bookingServiceInterface.listAllBookings();
+			bookings = bookingServiceInterface.read();
 		} catch (RemoteException e) {
-			System.out.println("error accessing data from remote object");
+			System.out.println("Error occurred: Get booking data on RMI server!");
 			e.printStackTrace();
 		}
 
@@ -79,9 +65,9 @@ public class RMIClient {
 			if (b.getBookingId() == id) {
 				resultBooking = b;
 			}
-
 		}
 
+		// If a booking was found return the object.
 		if (resultBooking != null) {
 			return resultBooking;
 		} else {
@@ -90,53 +76,53 @@ public class RMIClient {
 
 	}
 
-	/* Create a booking */
+	/*
+	 * Create a booking entry in database.
+	 */
 	public void create(Booking booking) {
-		// String query = "Insert INTO bookings VALUES(" + booking.getBookingId() + ","
-		// + booking.getVehicleId() + ","
-		// + booking.getCustId() + ",\"" + booking.getStartDate() + "\",\"" +
-		// booking.getEndDate() + "\");";
-		System.out.println("DEBUG/RMI CLIENT? Attempting to send to db:" + booking.toString());
+		// Create the query
 		String query = " INSERT INTO bookings (vehicle_id,customer_id,start_date,end_date)VALUES("
 				+ booking.getVehicleId() + "," + booking.getCustId() + ",'" + booking.getStartDate() + "','"
 				+ booking.getEndDate() + "')";
 		try {
 			bookingServiceInterface.create(query);
 		} catch (RemoteException e) {
-			System.out.println("error on sql query in booking controller");
+			System.out.println("Error occurred:  Creating a booking failed on RMI server!");
 			e.printStackTrace();
 		}
 	}
 
-	/* Update a booking */
+	/*
+	 * Update a booking entry in database.
+	 */
 	public void updateBooking(Booking booking) {
-		System.out.println("DEBUG/RMI CLIENT? Attempting to UPDATE to db:" + booking.toString());
-
+		// Create the query
 		String query = "UPDATE bookings SET vehicle_id =" + booking.getVehicleId() + ", " + "customer_id ="
 				+ booking.getCustId() + ", " + "start_date ='" + booking.getStartDate() + "', " + "end_date ='"
 				+ booking.getEndDate() + "' WHERE booking_id=" + booking.getBookingId() + ";";
 
 		try {
-			bookingServiceInterface.updateBooking(query);
+			bookingServiceInterface.update(query);
 		} catch (RemoteException e) {
-			System.out.println("Error occured updated booking!");
+			System.out.println("Error occured: Updated booking failed on RMI server!");
 			e.printStackTrace();
 		}
 
 	}
 
-	/** Delete a booking */
+	/*
+	 * Delete a booking from database.
+	 */
 	public void delete(int id) {
+		// Create the query
 		String query = "DELETE FROM bookings WHERE booking_id =" + id + ";";
 
 		try {
-			System.out.println("Debug/RMIClient : Attempting to delete");
 			bookingServiceInterface.delete(query);
 		} catch (RemoteException e) {
-			System.out.println("error deleting booking in Booking controller");
+			System.out.println("Error occured: Deleting booking on RMI server!");
 			e.printStackTrace();
 		}
-
 	}
 
 }

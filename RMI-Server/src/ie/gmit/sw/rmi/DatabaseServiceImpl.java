@@ -59,7 +59,7 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 	}
 
 	@Override
-	public void updateBooking(String q) throws RemoteException {
+	public void update(String q) throws RemoteException {
 		try {
 			stmt.executeUpdate(q);
 		} catch (SQLException e) {
