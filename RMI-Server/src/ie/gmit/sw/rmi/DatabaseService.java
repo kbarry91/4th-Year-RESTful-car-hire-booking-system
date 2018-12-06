@@ -11,7 +11,7 @@ public interface DatabaseService extends Remote {
 	public boolean create(String q) throws RemoteException; 
 
 	// read booking
-	public List<Booking> listAllBookings() throws RemoteException; 
+	public List<Booking> read() throws RemoteException; 
 
 	// update booking
 	public void update(String q) throws RemoteException; 

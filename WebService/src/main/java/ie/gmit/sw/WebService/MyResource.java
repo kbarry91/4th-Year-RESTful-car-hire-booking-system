@@ -32,7 +32,7 @@ public class MyResource extends BookingMarshal {
 
 	private void init() {
 		bookings = bc.getAllBookings();
-		System.out.println("======Bookking list created");
+		System.out.println("Booking list created");
 	}
 
 	/**

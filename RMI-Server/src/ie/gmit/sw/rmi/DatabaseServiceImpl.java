@@ -80,7 +80,7 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 	}
 
 	@Override
-	public List<Booking> listAllBookings() throws RemoteException {
+	public List<Booking> read() throws RemoteException {
 		System.out.println("Listing all bookings RMISERVER start");
 		String query = "select * from bookings";
 		ResultSet result = null;
