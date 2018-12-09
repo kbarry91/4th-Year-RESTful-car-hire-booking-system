@@ -7,7 +7,6 @@
 * [Overview](#overview)
 * [How to run](#how-to-run-the-program)
 * [Technologies](#technologies)
-* [Issues](#issues)
 
 # Overview 
 This project use the JAX-RS/Jersey, Java RMI and JAXB frameworks in order to develop a simple Car Hire Booking System. A Web Client page should provide users with the ability to Create/Modify/Update/Delete bookings for a specific vehicle for a given set of dates. The Web Client acts with a RESTful JAX-RS Web Service for bookings which is deployed on Apache Tomcat Server(Version 7). The RESTful Web Service acts as a RMI client to the RMI Database Server which handles persistence.
